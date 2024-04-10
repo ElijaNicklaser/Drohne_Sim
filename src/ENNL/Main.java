@@ -15,7 +15,7 @@ public class Main extends BasicGame {
 
     public static void main(String[] args) throws SlickException {
         AppGameContainer container = new AppGameContainer(new Main());
-        container.setDisplayMode(1600, 1080, false);
+        container.setDisplayMode(1920, 1080, false);
         //container.setClearEachFrame(false);
         container.setMinimumLogicUpdateInterval(25);
         container.setTargetFrameRate(60);
@@ -25,7 +25,7 @@ public class Main extends BasicGame {
 
     @Override
     public void init(GameContainer container) throws SlickException {
-
+        background = new Image("assets/Bilder/SpielHintergrund.png");
     }
 
     @Override
@@ -35,5 +35,6 @@ public class Main extends BasicGame {
 
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
+        background.draw();
     }
 }
