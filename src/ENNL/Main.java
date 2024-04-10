@@ -8,6 +8,9 @@ public class Main extends BasicGame {
 
     private Image background;
     private AngelCodeFont font;
+    private Nachbar nachbar;
+    private Drohne drohne;
+
 
     public Main() {
         super("Drohne_Sim");
@@ -26,6 +29,7 @@ public class Main extends BasicGame {
     @Override
     public void init(GameContainer container) throws SlickException {
         background = new Image("assets/Bilder/SpielHintergrund.png");
+        nachbar = new Nachbar(1400,540, new Image("assets/Bilder/Nachbar V1.png"),container.getInput());
     }
 
     @Override
@@ -36,5 +40,6 @@ public class Main extends BasicGame {
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
         background.draw();
+        nachbar.draw(g);
     }
 }
