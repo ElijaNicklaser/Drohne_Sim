@@ -9,7 +9,7 @@ import org.newdawn.slick.geom.Shape;
 public class Drohne extends SpielObjekt{
     private Input input;
     private Rectangle shape;
-    private float speed = 15f;
+    private float speed = 10f;
     private float force = 9f;
 
 
@@ -24,10 +24,12 @@ public class Drohne extends SpielObjekt{
         this.getImage().drawCentered(this.getX(), this.getY());
     }
 
+
     @Override
     public Shape getShape() {
         return shape;
     }
+
 
     @Override
     public void update(int delta) {

@@ -5,7 +5,6 @@ import org.newdawn.slick.*;
 import java.util.ArrayList;
 
 public class Main extends BasicGame {
-
     private Image background;
     private AngelCodeFont font;
     private Nachbar nachbar;
@@ -29,17 +28,20 @@ public class Main extends BasicGame {
     @Override
     public void init(GameContainer container) throws SlickException {
         background = new Image("assets/Bilder/SpielHintergrund.png");
-        nachbar = new Nachbar(1400,540, new Image("assets/Bilder/Nachbar V2.jpg"),container.getInput());
+        nachbar = new Nachbar(1400,940, new Image("assets/Bilder/Nachbar V2.jpg"),container.getInput());
+        drohne = new Drohne(300,540, new Image("assets/Bilder/Drohne V1.gif"),container.getInput());
     }
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
-
+        nachbar.update(delta);
+        drohne.update(delta);
     }
 
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
         background.draw();
         nachbar.draw(g);
+        drohne.draw(g);
     }
 }
