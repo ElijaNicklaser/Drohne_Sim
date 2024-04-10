@@ -29,7 +29,7 @@ public class Main extends BasicGame {
     @Override
     public void init(GameContainer container) throws SlickException {
         background = new Image("assets/Bilder/SpielHintergrund.png");
-        nachbar = new Nachbar(1400,540, new Image("assets/Bilder/Nachbar V1.png"),container.getInput());
+        nachbar = new Nachbar(1400,540, new Image("assets/Bilder/Nachbar V2.jpg"),container.getInput());
     }
 
     @Override
