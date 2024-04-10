@@ -31,14 +31,14 @@ public class Nachbar extends SpielObjekt{
         public void update(int delta) {
             boolean pressed = false;
 
-            if (input.isKeyDown(Input.KEY_A)) {
+            if (input.isKeyDown(Input.KEY_LEFT)) {
                 this.setX(this.getX() - (int) this.acceleration);
                 if ((this.getX() < this.getWith() / 2)) this.setX(this.getWith() / 2);
                 pressed = true;
             }
-            if (input.isKeyDown(Input.KEY_D)) {
+            if (input.isKeyDown(Input.KEY_RIGHT)) {
                 this.setX(this.getX() + (int) this.acceleration);
-                if ((this.getX() > (2000 - this.getWith() / 2))) this.setX(1024 - this.getWith() / 2);
+                if ((this.getX() > (1920 - this.getWith() / 2))) this.setX(1920 - this.getWith() / 2);
                 pressed = true;
             }
 
