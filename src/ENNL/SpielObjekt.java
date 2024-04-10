@@ -1,15 +1,17 @@
 package ENNL;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Shape;
 
-public class SpielObjekt {
+public abstract class SpielObjekt {
     private int x;
     private int y;
     private int with;
     private int height;
     private Image image;
 
-    public SpielObjekt(int x, int y, int with, int height, Image image) {
+    public SpielObjekt(int x, int y, Image image) {
         this.x = x;
         this.y = y;
         this.with = with;
@@ -56,4 +58,10 @@ public class SpielObjekt {
     public void setImage(Image image) {
         this.image = image;
     }
+
+    public abstract void draw(Graphics g);
+
+    public abstract Shape getShape();
+
+    public abstract void update(int delta);
 }
