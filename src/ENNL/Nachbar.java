@@ -9,7 +9,7 @@ import org.newdawn.slick.geom.Shape;
 public class Nachbar extends SpielObjekt{
         private Input input;
         private Rectangle shape;
-        private float acceleration = 0.1f;
+        private float acceleration = 0.001f;
 
     @Override
         public void draw(Graphics g) {
@@ -33,25 +33,28 @@ public class Nachbar extends SpielObjekt{
 
             if (input.isKeyDown(Input.KEY_LEFT)) {
                 this.setX(this.getX() - (int) this.acceleration);
-                if ((this.getX() < this.getWith() / 2)) this.setX(this.getWith() / 2);
+                if ((this.getX()  < 40 + this.getWith() / 2)) this.setX(40+ this.getWith() / 2);
                 pressed = true;
             }
             if (input.isKeyDown(Input.KEY_RIGHT)) {
                 this.setX(this.getX() + (int) this.acceleration);
-                if ((this.getX() > (1920 - this.getWith() / 2))) this.setX(1920 - this.getWith() / 2);
+                if ((this.getX() > (1880 - this.getWith() / 2))) this.setX(1880 - this.getWith() / 2);
                 pressed = true;
             }
 
             if (pressed) {
                 acceleration += delta;
-                if (acceleration > 10) acceleration = 100;
-
+                if (acceleration > 8) acceleration = 8;
             } else {
-                acceleration = 0.01f;
+                acceleration = 0.001f;
             }
             shape.setCenterX(this.getX());
             shape.setCenterY(this.getY());
+        }
 
+        public void setNachbarPosition(){
+        this.setX(this.getX());
+        this.setY(this.getY());
         }
 
         public boolean intersects(Shape shape) {

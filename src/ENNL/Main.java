@@ -9,6 +9,9 @@ public class Main extends BasicGame {
     private AngelCodeFont font;
     private Nachbar nachbar;
     private Drohne drohne;
+    private Bombe bombe;
+    private Geschoss geschoss;
+
 
 
     public Main() {
@@ -30,12 +33,24 @@ public class Main extends BasicGame {
         background = new Image("assets/Bilder/SpielHintergrund.png");
         nachbar = new Nachbar(1400,940, new Image("assets/Bilder/Nachbar V2.jpg"),container.getInput());
         drohne = new Drohne(300,540, new Image("assets/Bilder/Drohne V1.gif"),container.getInput());
+        bombe = new Bombe(300,540, new Image("assets/Bilder/Bombe.png"),container.getInput());
+        geschoss = new Geschoss(1400,940, new Image("assets/Bilder/Geschoss.png"),container.getInput());
     }
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
+
+        if (drohne.intersects(nachbar.getShape())) {
+            drohne.moveback();
+        }
+
+        if (geschoss.intersects(nachbar.getShape())){
+
+        }
         nachbar.update(delta);
         drohne.update(delta);
+        geschoss.update(delta);
+        bombe.update(delta);
     }
 
     @Override
@@ -43,5 +58,7 @@ public class Main extends BasicGame {
         background.draw();
         nachbar.draw(g);
         drohne.draw(g);
+        geschoss.draw(g);
+        bombe.draw(g);
     }
 }

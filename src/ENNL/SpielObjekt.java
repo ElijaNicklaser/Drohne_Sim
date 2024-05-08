@@ -14,8 +14,8 @@ public abstract class SpielObjekt {
     public SpielObjekt(int x, int y, Image image) {
         this.x = x;
         this.y = y;
-        this.with = with;
-        this.height = height;
+        this.with = image.getWidth();
+        this.height = image.getHeight();
         this.image = image;
     }
 
