@@ -31,10 +31,11 @@ public class Main extends BasicGame {
     @Override
     public void init(GameContainer container) throws SlickException {
         background = new Image("assets/Bilder/SpielHintergrund.png");
-        nachbar = new Nachbar(1400,940, new Image("assets/Bilder/Nachbar V2.jpg"),container.getInput());
+        geschoss = new Geschoss(1400,940, new Image("assets/Bilder/Geschoss.png"),container.getInput());
+        nachbar = new Nachbar(1400,940, new Image("assets/Bilder/Nachbar V2.jpg"),container.getInput(),geschoss);
         drohne = new Drohne(300,540, new Image("assets/Bilder/Drohne V1.gif"),container.getInput());
         bombe = new Bombe(300,540, new Image("assets/Bilder/Bombe.png"),container.getInput());
-        geschoss = new Geschoss(1400,940, new Image("assets/Bilder/Geschoss.png"),container.getInput());
+
     }
 
     @Override

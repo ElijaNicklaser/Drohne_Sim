@@ -10,17 +10,20 @@ public class Nachbar extends SpielObjekt{
         private Input input;
         private Rectangle shape;
         private float acceleration = 0.001f;
+        private Geschoss geschoss;
 
+    public Nachbar(int x, int y, Image image, Input input, Geschoss geschoss) {
+        super(x, y, image);
+        this.input = input;
+        shape = new Rectangle(x, y, image.getWidth(), image.getHeight());
+        this.geschoss = geschoss;
+    }
     @Override
         public void draw(Graphics g) {
             this.getImage().drawCentered(this.getX(), this.getY());
         }
 
-        public Nachbar(int x, int y, Image image, Input input) {
-            super(x, y, image);
-            this.input = input;
-            shape = new Rectangle(x, y, image.getWidth(), image.getHeight());
-        }
+
 
         @Override
         public Shape getShape() {
@@ -41,6 +44,13 @@ public class Nachbar extends SpielObjekt{
                 if ((this.getX() > (1880 - this.getWith() / 2))) this.setX(1880 - this.getWith() / 2);
                 pressed = true;
             }
+            if (geschoss.getY() > 1880){
+                if (input.isKeyDown(Input.KEY_UP)) {
+                    geschoss.setX(this.getX());
+                    geschoss.setY(this.getY() - 200 + this.getHeight() / 2);
+                }
+            }
+            else geschoss.setY()=0;
 
             if (pressed) {
                 acceleration += delta;
@@ -52,10 +62,6 @@ public class Nachbar extends SpielObjekt{
             shape.setCenterY(this.getY());
         }
 
-        public void setNachbarPosition(){
-        this.setX(this.getX());
-        this.setY(this.getY());
-        }
 
         public boolean intersects(Shape shape) {
             if (shape != null) {

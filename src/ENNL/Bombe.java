@@ -30,7 +30,7 @@ public class Bombe extends SpielObjekt{
 
     @Override
     public void update(int delta) {
-        if (input.isKeyDown(Input.KEY_LEFT)) {
+        if (input.isKeyDown(Input.KEY_SPACE)) {
             this.geschwindigkeit = (delta * this.acceleration + geschwindigkeit);
             this.setX(this.getX() + (int) this.geschwindigkeit);
             shape.setCenterX(this.getX());

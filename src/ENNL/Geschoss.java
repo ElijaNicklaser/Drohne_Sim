@@ -19,7 +19,7 @@ public class Geschoss extends SpielObjekt{
     public Geschoss(int x, int y, Image image, Input input)
     {
         super(x, y, image);
-        setNachbarPosition();
+        //setNachbarPosition();
         shape = new Rectangle(x, y, image.getWidth(), image.getHeight());
     }
 
@@ -31,10 +31,12 @@ public class Geschoss extends SpielObjekt{
     @Override
     public void update(int delta)
     {
-        this.geschwindigkeit = (delta*this.acceleration + geschwindigkeit);
-        this.setX(this.getX()+(int)this.geschwindigkeit);
-        shape.setCenterX(this.getX());
-        shape.setCenterY(this.getY());
+        if (this.getY() > (0-this.getHeight())) {
+            this.geschwindigkeit = (delta * this.acceleration + geschwindigkeit);
+            this.setY(this.getY() - (int) this.geschwindigkeit);
+            shape.setCenterX(this.getX());
+            shape.setCenterY(this.getY());
+        }
 
     }
     public boolean intersects(Shape shape)
@@ -44,4 +46,5 @@ public class Geschoss extends SpielObjekt{
         }
         return false;
     }
+
 }
