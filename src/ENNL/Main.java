@@ -11,6 +11,8 @@ public class Main extends BasicGame {
     private Drohne drohne;
     private Bombe bombe;
     private Geschoss geschoss;
+    private int hit=0;
+    private Animation animation;
 
 
 
@@ -31,10 +33,16 @@ public class Main extends BasicGame {
     @Override
     public void init(GameContainer container) throws SlickException {
         background = new Image("assets/Bilder/SpielHintergrund.png");
-        geschoss = new Geschoss(1400,940, new Image("assets/Bilder/Geschoss.png"),container.getInput());
+        geschoss = new Geschoss(1400,-100, new Image("assets/Bilder/Geschoss.png"),container.getInput());
         nachbar = new Nachbar(1400,940, new Image("assets/Bilder/Nachbar V2.jpg"),container.getInput(),geschoss);
         drohne = new Drohne(300,540, new Image("assets/Bilder/Drohne V1.gif"),container.getInput());
         bombe = new Bombe(300,540, new Image("assets/Bilder/Bombe.png"),container.getInput());
+
+        animation = new Animation();
+        PackedSpriteSheet pss = new PackedSpriteSheet("assets/Animation/pack-result-laser/texture.def");
+        for (int i=0;i<=3;i++){
+            animation.addFrame(pss.getSprite("laser_"+i+".png"),100);
+        }
 
     }
 
@@ -45,12 +53,19 @@ public class Main extends BasicGame {
             drohne.moveback();
         }
 
-        if (geschoss.intersects(nachbar.getShape())){
-
+        if (drohne.intersects(geschoss.getShape())){
+            hit ++;
         }
+
+        if (hit >= 3){
+            container.exit();
+        }
+
         nachbar.update(delta);
         drohne.update(delta);
         geschoss.update(delta);
+        bombe.setY(drohne.getY()+drohne.getHeight());
+        bombe.setX(drohne.getX());
         bombe.update(delta);
     }
 
@@ -61,5 +76,6 @@ public class Main extends BasicGame {
         drohne.draw(g);
         geschoss.draw(g);
         bombe.draw(g);
+        animation.draw(100,100);
     }
 }

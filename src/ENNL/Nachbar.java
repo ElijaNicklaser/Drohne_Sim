@@ -44,13 +44,12 @@ public class Nachbar extends SpielObjekt{
                 if ((this.getX() > (1880 - this.getWith() / 2))) this.setX(1880 - this.getWith() / 2);
                 pressed = true;
             }
-            if (geschoss.getY() > 1880){
+            if (geschoss.getY() < 0){
                 if (input.isKeyDown(Input.KEY_UP)) {
                     geschoss.setX(this.getX());
                     geschoss.setY(this.getY() - 200 + this.getHeight() / 2);
                 }
             }
-            else geschoss.setY()=0;
 
             if (pressed) {
                 acceleration += delta;
