@@ -19,7 +19,6 @@ public class Geschoss extends SpielObjekt{
     public Geschoss(int x, int y, Image image, Input input)
     {
         super(x, y, image);
-        //setNachbarPosition();
         shape = new Rectangle(x, y, image.getWidth(), image.getHeight());
     }
 

@@ -1,8 +1,6 @@
 package ENNL;
 
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
@@ -11,18 +9,31 @@ public class Nachbar extends SpielObjekt{
         private Rectangle shape;
         private float acceleration = 0.001f;
         private Geschoss geschoss;
+        private Animation animation;
 
     public Nachbar(int x, int y, Image image, Input input, Geschoss geschoss) {
         super(x, y, image);
         this.input = input;
         shape = new Rectangle(x, y, image.getWidth(), image.getHeight());
-        this.geschoss = geschoss;
+
+
+        animation = new Animation();
+        PackedSpriteSheet pss = null;
+        try {
+            pss = new PackedSpriteSheet("assets/Animation/pack-result nachbar/texture.def");
+        } catch (SlickException e) {
+            throw new RuntimeException(e);
+        }
+        for (int i=0;i<=3;i++) {
+            animation.addFrame(pss.getSprite("nachbar_" + i + ".png"), 100);
+        }
     }
+
+
     @Override
         public void draw(Graphics g) {
             this.getImage().drawCentered(this.getX(), this.getY());
         }
-
 
 
         @Override

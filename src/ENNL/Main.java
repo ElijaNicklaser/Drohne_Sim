@@ -12,7 +12,6 @@ public class Main extends BasicGame {
     private Bombe bombe;
     private Geschoss geschoss;
     private int hit=0;
-    private Animation animation;
 
 
 
@@ -37,13 +36,6 @@ public class Main extends BasicGame {
         nachbar = new Nachbar(1400,940, new Image("assets/Bilder/Nachbar V2.jpg"),container.getInput(),geschoss);
         drohne = new Drohne(300,540, new Image("assets/Bilder/Drohne V1.gif"),container.getInput());
         bombe = new Bombe(300,540, new Image("assets/Bilder/Bombe.png"),container.getInput());
-
-        animation = new Animation();
-        PackedSpriteSheet pss = new PackedSpriteSheet("assets/Animation/pack-result-laser/texture.def");
-        for (int i=0;i<=3;i++){
-            animation.addFrame(pss.getSprite("laser_"+i+".png"),100);
-        }
-
     }
 
     @Override
@@ -54,6 +46,12 @@ public class Main extends BasicGame {
         }
 
         if (drohne.intersects(geschoss.getShape())){
+            geschoss.setY(-180);
+            hit ++;
+        }
+
+        if (nachbar.intersects(bombe.getShape())){
+            drohne.moveback();
             hit ++;
         }
 
@@ -65,7 +63,7 @@ public class Main extends BasicGame {
         drohne.update(delta);
         geschoss.update(delta);
         bombe.setY(drohne.getY()+drohne.getHeight());
-        bombe.setX(drohne.getX());
+        bombe.setX(drohne.getX()-70);
         bombe.update(delta);
     }
 
@@ -76,6 +74,5 @@ public class Main extends BasicGame {
         drohne.draw(g);
         geschoss.draw(g);
         bombe.draw(g);
-        animation.draw(100,100);
     }
 }
