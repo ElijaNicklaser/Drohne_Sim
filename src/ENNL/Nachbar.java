@@ -60,8 +60,8 @@ public class Nachbar extends SpielObjekt{
             }
             if (geschoss.getY() < 0){
                 if (input.isKeyDown(Input.KEY_UP)) {
-                    geschoss.setX(this.getX() +50);
-                    geschoss.setY(this.getY() - 50 + this.getHeight() / 2);
+                    geschoss.setX(this.getX() -10);
+                    geschoss.setY(this.getY() +40 + this.getHeight() / 2);
                 }
             }
 

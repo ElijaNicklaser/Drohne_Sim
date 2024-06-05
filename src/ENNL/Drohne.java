@@ -1,8 +1,6 @@
 package ENNL;
 
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
@@ -14,20 +12,34 @@ public class Drohne extends SpielObjekt{
     private float force = 1f;
     private float acceleration = 12f;
     private Point oldLocation;
+    private Bombe bombe;
+    private Animation animation;
 
 
-    public Drohne(int x, int y, Image image, Input input) {
-        super(x, y, image);
-        this.input = input;
-        shape = new Rectangle(x, y, image.getWidth(), image.getHeight());
-        this.oldLocation = new Point(this.getX(), this.getY());
-    }
 
     @Override
-    public void draw(Graphics g) {
-        this.getImage().drawCentered(this.getX(), this.getY());
+    public void draw(Graphics g)
+    {
+        this.animation.draw(this.getX(), this.getY());
     }
 
+
+    public Drohne(int x, int y, Image image, Input input, Bombe bombe) {
+        super(x, y, image);
+        this.input = input;
+        this.bombe = bombe;
+        shape = new Rectangle(x, y, image.getWidth(), image.getHeight());
+        this.oldLocation = new Point(this.getX(), this.getY());
+
+        animation = new Animation();
+        PackedSpriteSheet pss = null;
+        try {pss = new PackedSpriteSheet("assets/Animation/pack-result Drone V3/texture.def");}
+        catch (SlickException e) {
+            throw new RuntimeException(e);
+        }
+        for (int i=0;i<=4;i++){
+            animation.addFrame(pss.getSprite("Drone V3_"+i+".png"),100);}
+    }
 
     @Override
     public Shape getShape() {return shape;}
@@ -36,7 +48,13 @@ public class Drohne extends SpielObjekt{
     @Override
     public void update(int delta) {
         this.oldLocation = new Point(this.getX(), this.getY());
-            if (input.isKeyDown(Input.KEY_W)) {
+
+        if (input.isKeyDown(Input.KEY_SPACE)) {
+            bombe.setX(this.getX() -10);
+            bombe.setY(this.getY() +40 + this.getHeight() / 2);
+            }
+
+        if (input.isKeyDown(Input.KEY_W)) {
                 this.setY(this.getY() - (int) this.speed);
             } else if (input.isKeyDown(Input.KEY_S)) {
                 this.setY(this.getY() + (int) this.speed);
@@ -50,8 +68,10 @@ public class Drohne extends SpielObjekt{
             }
             if (input.isKeyDown(Input.KEY_D)) {
                 this.setX(this.getX() + (int) this.acceleration);
-
             }
+
+
+
             //unten
             if ((this.getY() > (1080 - this.getHeight() / 2))) this.setY(1080 - this.getHeight() / 2);
             //oben

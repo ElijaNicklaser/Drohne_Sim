@@ -3,6 +3,8 @@ package ENNL;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+
+
 public class Bombe extends SpielObjekt{
     private Input input;
     private Rectangle shape;
@@ -13,17 +15,18 @@ public class Bombe extends SpielObjekt{
     private Animation animation;
 
 
-
     @Override
     public void draw(Graphics g)
     {
         this.animation.draw(this.getX(), this.getY());
     }
+
+
     public Bombe(int x, int y, Image image, Input input)
     {
         super(x, y, image);
         this.input = input;
-       shape = new  Rectangle(x, y, image.getWidth(), image.getHeight());
+        shape = new  Rectangle(x, y, image.getWidth(), image.getHeight());
 
         animation = new Animation();
         PackedSpriteSheet pss = null;
@@ -40,22 +43,17 @@ public class Bombe extends SpielObjekt{
         return shape;
     }
 
+
     @Override
     public void update(int delta) {
         this.time += delta;
         // 1000ms = 1Sekunde
         if (this.time > 1000) {
             setRotation(rotation,delta,true);
-        }
-
-        if (input.isKeyDown(Input.KEY_SPACE)) {
-            setRotation(rotation,delta,true);
-            this.setY(this.getY() - (int) this.geschwindigkeit);
+            this.setY(this.getY() + (int) this.geschwindigkeit);
             shape.setCenterX(this.getX());
             shape.setCenterY(this.getY());
         }
-        shape.setCenterX(this.getX());
-        shape.setCenterY(this.getY());
     }
 
 
