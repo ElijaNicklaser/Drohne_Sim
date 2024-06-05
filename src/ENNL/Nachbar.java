@@ -11,11 +11,20 @@ public class Nachbar extends SpielObjekt{
         private Geschoss geschoss;
         private Animation animation;
 
+
+
+
+    @Override
+    public void draw(Graphics g)
+    {
+        this.animation.draw(this.getX(), this.getY());
+    }
+
     public Nachbar(int x, int y, Image image, Input input, Geschoss geschoss) {
         super(x, y, image);
         this.input = input;
         shape = new Rectangle(x, y, image.getWidth(), image.getHeight());
-
+        this.geschoss = geschoss;
 
         animation = new Animation();
         PackedSpriteSheet pss = null;
@@ -31,15 +40,9 @@ public class Nachbar extends SpielObjekt{
 
 
     @Override
-        public void draw(Graphics g) {
-            this.getImage().drawCentered(this.getX(), this.getY());
-        }
-
-
-        @Override
-        public Shape getShape() {
-            return shape;
-        }
+    public Shape getShape() {
+        return shape;
+    }
 
         @Override
         public void update(int delta) {
@@ -57,8 +60,8 @@ public class Nachbar extends SpielObjekt{
             }
             if (geschoss.getY() < 0){
                 if (input.isKeyDown(Input.KEY_UP)) {
-                    geschoss.setX(this.getX());
-                    geschoss.setY(this.getY() - 200 + this.getHeight() / 2);
+                    geschoss.setX(this.getX() +50);
+                    geschoss.setY(this.getY() - 50 + this.getHeight() / 2);
                 }
             }
 

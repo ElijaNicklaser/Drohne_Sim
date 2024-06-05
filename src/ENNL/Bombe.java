@@ -27,12 +27,12 @@ public class Bombe extends SpielObjekt{
 
         animation = new Animation();
         PackedSpriteSheet pss = null;
-        try {pss = new PackedSpriteSheet("assets/Animation/pack-result-laser/texture.def");}
+        try {pss = new PackedSpriteSheet("assets/Animation/pack-result Laser V2/texture.def");}
         catch (SlickException e) {
             throw new RuntimeException(e);
         }
         for (int i=0;i<=3;i++){
-            animation.addFrame(pss.getSprite("laser_"+i+".png"),100);}
+            animation.addFrame(pss.getSprite("Laser_"+i+".png"),100);}
     }
 
     @Override
@@ -60,6 +60,7 @@ public class Bombe extends SpielObjekt{
 
 
     private void setRotation(int rotation,int delta,boolean moving) {
+        if (this.time > 998) {
             switch (rotationArray[rotation]) {
                 case 0:
                     this.getImage().setRotation(0f);
@@ -72,7 +73,10 @@ public class Bombe extends SpielObjekt{
                     break;
             }
             rotation++;
-            if (rotation > 3 ) rotation=0;
+            if (rotation > 3) {
+                rotation =0;
+            }
+        }
     }
 
 
