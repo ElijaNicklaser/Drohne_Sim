@@ -13,8 +13,10 @@ public class Main extends BasicGame {
     private Katze katze;
     private Laser laser;
     private Geschoss geschoss;
+    private Explosion explosion;
     private int hit=0;
     private Music music;
+    private float time = 0;
 
 
 
@@ -45,18 +47,23 @@ public class Main extends BasicGame {
         bombe = new Bombe(300,540, new Image("assets/Bilder/Bombe.png"),container.getInput());
         katze = new Katze(300,540, new Image("assets/Bilder/Bombe.png"),container.getInput());
         laser = new Laser(300,540, new Image("assets/Bilder/Bombe.png"),container.getInput());
+        explosion = new Explosion(-100,-100, new Image("assets/Bilder/Bombe.png"),container.getInput());
     }
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
+        this.time += delta;
 
         if (drohne.intersects(nachbar.getShape())) {
             drohne.moveback();
         }
 
         if (drohne.intersects(geschoss.getShape())){
+            explosion.setY(geschoss.getY());
+            explosion.setX(geschoss.getX());
             geschoss.setY(+180);
             hit ++;
+            this.time = 0;
         }
 
         if (nachbar.intersects(bombe.getShape())){
@@ -72,10 +79,14 @@ public class Main extends BasicGame {
         drohne.update(delta);
         geschoss.update(delta);
         bombe.update(delta);
+        laser.update(delta);
         laser.setY(drohne.getY()+40);
         laser.setX(drohne.getX()-25);
         katze.setY(nachbar.getY()+110);
         katze.setX(nachbar.getX()-10);
+
+        if (this.time >= 300.0)
+            explosion.setY(-100);
     }
 
     @Override
@@ -87,6 +98,9 @@ public class Main extends BasicGame {
         bombe.draw(g);
         katze.draw(g);
         laser.draw(g);
+        explosion.draw(g);
         font.drawString(80, 5, hit + "  Hit", Color.red);
+        font.drawString(80, 30, time + "  Delta", Color.red);
+
     }
 }

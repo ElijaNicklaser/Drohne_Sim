@@ -1,33 +1,34 @@
 package ENNL;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
-public class Laser extends SpielObjekt{
+public class Explosion extends SpielObjekt{
     private Input input;
     private Rectangle shape;
     private Animation animation;
-    private float rotationAngle;
-
 
     @Override
     public void draw(Graphics g)
     {
         this.animation.draw(this.getX(), this.getY());
     }
-    public Laser(int x, int y, Image image, Input input)
+    public Explosion(int x, int y, Image image, Input input)
     {
         super(x, y, image);
         this.input = input;
         shape = new  Rectangle(x, y, image.getWidth(), image.getHeight());
 
-        animation = new Animation();
-        PackedSpriteSheet pss = null;
-        try {pss = new PackedSpriteSheet("assets/Animation/pack-result Laser V2/texture.def");}
-        catch (SlickException e) {
-            throw new RuntimeException(e);
-        }
-        for (int i=0;i<=3;i++){
-            animation.addFrame(pss.getSprite("Laser_"+i+".png"),100);}
+            animation = new Animation();
+            PackedSpriteSheet pss = null;
+            try {
+                pss = new PackedSpriteSheet("assets/Animation/pack-result explosion/texture.def");
+            } catch (SlickException e) {
+                throw new RuntimeException(e);
+            }
+            for (int i = 0; i <= 2; i++) {
+                animation.addFrame(pss.getSprite("explosion_" + i + ".png"), 100);
+            }
     }
 
     @Override
@@ -39,13 +40,6 @@ public class Laser extends SpielObjekt{
     public void update(int delta)
     {
     }
-
-    public void setRotation(int delta)
-    {
-        rotationAngle += 45.0f * (delta / 1000.0f); // 45 Grad pro Sekunde
-        rotationAngle %= 360.0f; // Winkel im Bereich [0, 360)
-    }
-
     public boolean intersects(Shape shape)
     {
         if (shape != null) {
