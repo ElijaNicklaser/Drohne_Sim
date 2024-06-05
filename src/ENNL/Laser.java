@@ -1,57 +1,70 @@
 package ENNL;
-import org.newdawn.slick.*;
+
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+
+
 public class Laser extends SpielObjekt{
-    private Input input;
-    private Rectangle shape;
-    private Animation animation;
-    private float rotationAngle;
+
+        private Input input;
+        private Rectangle shape;
+        private Bombe bombe;
+
+        private int rotation =0;
 
 
-    @Override
-    public void draw(Graphics g)
-    {
-        this.animation.draw(this.getX(), this.getY());
-    }
-    public Laser(int x, int y, Image image, Input input)
-    {
-        super(x, y, image);
+
+        public Laser(int x,int y,Image image,Input input, Bombe bombe){
+        super(x,y,image);
+
         this.input = input;
-        shape = new  Rectangle(x, y, image.getWidth(), image.getHeight());
+        this.bombe = bombe;
 
-        animation = new Animation();
-        PackedSpriteSheet pss = null;
-        try {pss = new PackedSpriteSheet("assets/Animation/pack-result Laser V2/texture.def");}
-        catch (SlickException e) {
-            throw new RuntimeException(e);
+        shape = new Rectangle(x,y,image.getWidth(),image.getHeight());
         }
-        for (int i=0;i<=3;i++){
-            animation.addFrame(pss.getSprite("Laser_"+i+".png"),100);}
-    }
 
-    @Override
-    public Shape getShape() {
+        @Override
+        public void draw(Graphics g){
+        this.getImage().drawCentered(this.getX(),this.getY());
+        }
+
+        @Override
+        public Shape getShape() {
         return shape;
-    }
-
-    @Override
-    public void update(int delta)
-    {
-    }
-
-    public void setRotation(int delta)
-    {
-        rotationAngle += 45.0f * (delta / 1000.0f); // 45 Grad pro Sekunde
-        rotationAngle %= 360.0f; // Winkel im Bereich [0, 360)
-    }
-
-    public boolean intersects(Shape shape)
-    {
-        if (shape != null) {
-            return this.getShape().intersects(shape);
         }
-        return false;
-    }
 
-}
+        @Override
+        public void update(int delta){
+
+        if (input.isKeyDown(Input.KEY_D)){
+                this.getImage().setRotation(-45f);
+        }
+
+        else if(input.isKeyDown(Input.KEY_A)) {
+        this.getImage().setRotation(+45f);
+        }
+        else{
+        this.getImage().setRotation(0);
+        }
+
+        if (input.isKeyPressed(Input.KEY_SPACE)) {
+                bombe.setX(this.getX());
+                bombe.setY(this.getY() -20 + this.getHeight() / 2);
+        }
+
+
+        shape.setCenterX(this.getX());
+        shape.setCenterY(this.getY());
+        }
+
+
+            public boolean intersects(Shape shape) {
+                if (shape != null) {
+                    return this.getShape().intersects(shape);
+                }
+                return false;
+            }
+        }

@@ -12,7 +12,6 @@ public class Drohne extends SpielObjekt{
     private float force = 1f;
     private float acceleration = 12f;
     private Point oldLocation;
-    private Bombe bombe;
     private Animation animation;
 
 
@@ -27,18 +26,17 @@ public class Drohne extends SpielObjekt{
     public Drohne(int x, int y, Image image, Input input, Bombe bombe) {
         super(x, y, image);
         this.input = input;
-        this.bombe = bombe;
         shape = new Rectangle(x, y, image.getWidth(), image.getHeight());
         this.oldLocation = new Point(this.getX(), this.getY());
 
         animation = new Animation();
         PackedSpriteSheet pss = null;
-        try {pss = new PackedSpriteSheet("assets/Animation/pack-result Drone V3/texture.def");}
+        try {pss = new PackedSpriteSheet("assets/Animation/pack-result Drone Finale/texture.def");}
         catch (SlickException e) {
             throw new RuntimeException(e);
         }
         for (int i=0;i<=4;i++){
-            animation.addFrame(pss.getSprite("Drone V3_"+i+".png"),100);}
+            animation.addFrame(pss.getSprite("Drone F_"+i+".png"),100);}
     }
 
     @Override
@@ -48,11 +46,6 @@ public class Drohne extends SpielObjekt{
     @Override
     public void update(int delta) {
         this.oldLocation = new Point(this.getX(), this.getY());
-
-        if (input.isKeyDown(Input.KEY_SPACE)) {
-            bombe.setX(this.getX() -10);
-            bombe.setY(this.getY() +40 + this.getHeight() / 2);
-            }
 
         if (input.isKeyDown(Input.KEY_W)) {
                 this.setY(this.getY() - (int) this.speed);
@@ -71,7 +64,6 @@ public class Drohne extends SpielObjekt{
             }
 
 
-
             //unten
             if ((this.getY() > (1080 - this.getHeight() / 2))) this.setY(1080 - this.getHeight() / 2);
             //oben
@@ -80,9 +72,12 @@ public class Drohne extends SpielObjekt{
             if ((this.getX() > (1920 - this.getWith() / 2))) this.setX(1920 - (this.getWith() / 2));
             //links
             if ((this.getX() < (this.getWith() / 2))) this.setX(this.getWith() / 2);
+
+
             shape.setCenterX(this.getX());
             shape.setCenterY(this.getY());
         }
+
     public boolean intersects(Shape shape) {
         if (shape != null) {
             return this.getShape().intersects(shape);
