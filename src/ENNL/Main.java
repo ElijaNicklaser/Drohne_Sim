@@ -14,8 +14,10 @@ public class Main extends BasicGame {
     private Laser laser;
     private Geschoss geschoss;
     private Explosion explosion;
-    private int hit=0;
+    private int hitn=0;
+    private int hitd=0;
     private Music music;
+    private Sound sound;
     private float time = 0;
 
 
@@ -37,16 +39,17 @@ public class Main extends BasicGame {
     @Override
     public void init(GameContainer container) throws SlickException {
         font = new AngelCodeFont("testdata/demo2.fnt","testdata/demo2_00.tga");
-        //music = new Music("assets/Musik/Epic.wav",true);
-        //music.loop();
+        music = new Music("assets/Musik/Epic.wav",true);
+
 
         background = new Image("assets/Bilder/SpielHintergrund.png");
         geschoss = new Geschoss(1400,-100, new Image("assets/Bilder/Geschoss.png"),container.getInput());
-        nachbar = new Nachbar(1400,800, new Image("assets/Bilder/Nachbar V2.jpg"),container.getInput(),geschoss);
-        drohne = new Drohne(300,540, new Image("assets/Bilder/Drohne V1.gif"),container.getInput(),bombe);
-        bombe = new Bombe(300,540, new Image("assets/Bilder/2.png"),container.getInput(),laser);
+        nachbar = new Nachbar(1400,800, new Image("assets/Bilder/Nachbar V3.png"),container.getInput(),geschoss);
+        drohne = new Drohne(300,540, new Image("assets/Bilder/Drohne V2.png"),container.getInput(),bombe);
+        bombe = new Bombe(300,1200, new Image("assets/Bilder/2.png"),container.getInput());
         katze = new Katze(300,540, new Image("assets/Bilder/Bombe.png"),container.getInput());
         laser = new Laser(300,540, new Image("assets/Bilder/3.png"),container.getInput(), bombe);
+        bombe.setLaser(laser);
         explosion = new Explosion(-100,-100, new Image("assets/Bilder/Bombe.png"),container.getInput());
     }
 
@@ -59,21 +62,22 @@ public class Main extends BasicGame {
         }
 
         if (drohne.intersects(geschoss.getShape())){
-            explosion.setY(geschoss.getY());
-            explosion.setX(geschoss.getX());
-            geschoss.setY(+180);
-            hit ++;
+            explosion.setY(drohne.getY());
+            explosion.setX(drohne.getX());
+            geschoss.setY(-180);
+            hitd ++;
             this.time = 0;
         }
 
         if (nachbar.intersects(bombe.getShape())){
             drohne.moveback();
-            hit ++;
+            explosion.setY(bombe.getY());
+            explosion.setX(bombe.getX());
+            bombe.setY(1500);
+            hitn ++;
+            this.time = 0;
         }
 
-        if (hit >= 3){
-            container.exit();
-        }
 
         nachbar.update(delta);
         drohne.update(delta);
@@ -85,7 +89,7 @@ public class Main extends BasicGame {
         katze.setY(nachbar.getY()+110);
         katze.setX(nachbar.getX()-10);
 
-        if (this.time >= 300.0)
+        if (this.time >= 100.0)
             explosion.setY(-100);
     }
 
@@ -99,8 +103,8 @@ public class Main extends BasicGame {
         katze.draw(g);
         laser.draw(g);
         explosion.draw(g);
-        font.drawString(80, 5, hit + "  Hit", Color.red);
-        font.drawString(80, 30, time + "  Delta", Color.red);
+        font.drawString(80, 5, hitd + "  Hit's Drohne", Color.red);
+        font.drawString(80, 30, hitn + " Hit's Nachbar ", Color.red);
 
     }
 }

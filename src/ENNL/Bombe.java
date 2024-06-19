@@ -7,20 +7,39 @@ public class Bombe extends SpielObjekt{
     private Input input;
     private Rectangle shape;
     private float geschwindigkeit = 30;
-    private float acceleration = 0.0001f;
     private Animation animation;
     private Laser laser;
+    private boolean isFlying = false;
+
+    private float rotation =0;
+
+
+    public boolean isFlying() {
+        return isFlying;
+    }
+
+    public void setFlying(boolean flying) {
+        isFlying = flying;
+
+    }
+
+    public float getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
+    }
 
     @Override
     public void draw(Graphics g)
     {
         this.getImage().drawCentered(this.getX(),this.getY());
     }
-    public Bombe(int x, int y, Image image, Input input, Laser laser)
+    public Bombe(int x, int y, Image image, Input input)
     {
         super(x, y, image);
         this.input = input;
-        this.laser = laser;
         shape = new  Rectangle(x, y, image.getWidth(), image.getHeight());
     }
 
@@ -32,16 +51,29 @@ public class Bombe extends SpielObjekt{
     @Override
     public void update(int delta)
     {
-        if (this.getY() > (-100)) {
-            this.geschwindigkeit = (delta * this.acceleration + geschwindigkeit);
+        if (this.isFlying) {
 
-            this.getImage().setRotation(45f);
-            this.setY(this.getY() + (int) this.geschwindigkeit * (int) Math.cos(Math.toRadians(45f)));
-            this.setX(this.getY() + (int) this.geschwindigkeit * (int) Math.sin(Math.toRadians(45f)));
+            if (this.getRotation() == 0) {
+                this.setY(this.getY() + (int)this.geschwindigkeit);
+            }
+            if (this.getRotation() == -45f) {
+                this.setY(this.getY() + (int)this.geschwindigkeit);
+                this.setX(this.getX() + (int)this.geschwindigkeit);
+            }
+            if (this.getRotation() == 45f) {
+                this.setY(this.getY() + (int)this.geschwindigkeit);
+                this.setX(this.getX() - (int)this.geschwindigkeit);
+            }
 
-            shape.setCenterX(this.getX());
-            shape.setCenterY(this.getY());
         }
+
+        if (this.getY() > 1500) {
+            this.isFlying = false;
+
+        }
+
+        shape.setCenterX(this.getX());
+        shape.setCenterY(this.getY());
 
     }
     public boolean intersects(Shape shape)
@@ -50,6 +82,10 @@ public class Bombe extends SpielObjekt{
             return this.getShape().intersects(shape);
         }
         return false;
+    }
+
+    public void setLaser(Laser laser) {
+        this.laser = laser;
     }
 
 }
